@@ -22,3 +22,8 @@ def shop_view(request):
         with open('store/shop.html', encoding="utf-8") as f:
             data = f.read()
         return HttpResponse(data)
+
+def products_page_view (request, page):
+    if request.method == "GET":
+        for data in DATABASE.values():
+            if data['html'] == page:
