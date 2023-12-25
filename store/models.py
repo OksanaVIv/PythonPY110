@@ -172,7 +172,3 @@ DATABASE = {'1': {'name': 'Болгарский перец',
                    'html': 'chilli'
                    },
             }
-
-for product in DATABASE.keys():
-    if product == "1":
-        print(1)
