@@ -82,7 +82,7 @@ def cart_view(request):
 
 def cart_add_view(request, id_product):
     if request.method == "GET":
-        result = add_to_cart()  # TODO Вызвать ответственную за это действие функцию
+        result = add_to_cart(id_product)  # TODO Вызвать ответственную за это действие функцию
         if result:
             return JsonResponse({"answer": "Продукт успешно добавлен в корзину"},
                                 json_dumps_params={'ensure_ascii': False})
@@ -94,7 +94,7 @@ def cart_add_view(request, id_product):
 
 def cart_del_view(request, id_product):
     if request.method == "GET":
-        result = remove_from_cart()  # TODO Вызвать ответственную за это действие функцию
+        result = remove_from_cart(id_product)  # TODO Вызвать ответственную за это действие функцию
         if result:
             return JsonResponse({"answer": "Продукт успешно удалён из корзины"},
                                 json_dumps_params={'ensure_ascii': False})
