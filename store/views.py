@@ -19,15 +19,17 @@ def products_view(request):
                                                           'indent': 4})
 
 
-def shop_view(request):
-    if request.method == "GET":
-        with open('store/shop.html', encoding="utf-8") as f:
-            data = f.read()
-        return HttpResponse(data)
-
 # def shop_view(request):
 #     if request.method == "GET":
-#         return render(request, 'shop.html')
+#         with open('store/shop.html', encoding="utf-8") as f:
+#             data = f.read()
+#         return HttpResponse(data)
+
+def shop_view(request):
+    if request.method == "GET":
+        return render(request,
+                      'store/shop.html',
+                      context={"products": DATABASE.values()})
 
 
 
