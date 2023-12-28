@@ -23,7 +23,7 @@ def filtering_category(database: dict,
         result = [product for product in database.values() if category_key == product['category']]  # TODO При помощи фильтрации в list comprehension профильтруйте товары по категории. Или можете использовать
         # обычный цикл или функцию filter
     else:
-        result = database.values()  # TODO Трансформируйте database в список словарей
+        result = list(database.values())  # TODO Трансформируйте database в список словарей
     if ordering_key is not None:
         result.sort(key=lambda product: product[ordering_key], reverse=reverse)  # TODO Проведите сортировку result по ordering_key и параметру reverse
     return result

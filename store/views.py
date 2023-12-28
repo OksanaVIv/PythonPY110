@@ -5,19 +5,6 @@ from logic.services import filtering_category
 from logic.services import view_in_cart, add_to_cart, remove_from_cart
 from django.shortcuts import render
 
-def products_view(request):
-    if request.method == "GET":
-        id_product = request.GET.get('id')
-        if id_product:
-            if id_product in DATABASE.keys():
-                return JsonResponse(DATABASE[id_product], json_dumps_params={'ensure_ascii': False,
-                                                              'indent': 4})
-            else:
-                return HttpResponseNotFound("Данного продукта нет в базе данных")
-        else:
-            return JsonResponse(DATABASE, json_dumps_params={'ensure_ascii': False,
-                                                          'indent': 4})
-
 
 # def shop_view(request):
 #     if request.method == "GET":
