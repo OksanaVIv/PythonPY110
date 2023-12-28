@@ -67,7 +67,6 @@ def view_in_cart() -> dict:
 
     return cart
 
-
 def add_to_cart(id_product: str) -> bool:
     """
     Добавляет продукт в корзину. Если в корзине нет данного продукта, то добавляет его с количеством равное 1.
@@ -80,14 +79,16 @@ def add_to_cart(id_product: str) -> bool:
     cart = view_in_cart()  # TODO Помните, что у вас есть уже реализация просмотра корзины,
     # поэтому, чтобы загрузить данные из корзины, не нужно заново писать код.
     if id_product in cart['products']:
-        cart['products']['id_product'] += 1
+        cart['products'][str(id_product)] += 1
     else:
         if id_product in DATABASE.keys():
-            cart['products'].update = {'id_product': 1}
-            with open('cart.json', mode='x', encoding='utf-8') as f:
-                json.dump(id_product, f)
+            cart['products'].update({str(id_product): 1})
+            # with open('cart.json', mode='w', encoding='utf-8') as f:
+            #     json.dump(cart, f)
         else:
             return False
+    with open('cart.json', mode='w', encoding='utf-8') as f:
+        json.dump(cart, f)
     return True
 
 
@@ -103,8 +104,8 @@ def remove_from_cart(id_product: str) -> bool:
     cart = view_in_cart()  # TODO Помните, что у вас есть уже реализация просмотра корзины,
     # поэтому, чтобы загрузить данные из корзины, не нужно заново писать код.
     if id_product in cart['products']:
-        cart['products'].pop('id_product')
-        with open('cart.json', mode='x', encoding='utf-8') as f:  # Создаём файл и записываем туда пустую корзину
+        cart['products'].pop(str(id_product))
+        with open('cart.json', mode='w', encoding='utf-8') as f:  # Создаём файл и записываем туда пустую корзину
             json.dump(cart, f)
     else:
         return False
