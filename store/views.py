@@ -110,3 +110,23 @@ def cart_del_view(request, id_product):
                             status=404,
                             json_dumps_params={'ensure_ascii': False})
 
+
+def coupon_check_view(request, name_coupon):
+    # DATA_COUPON - база данных купонов: ключ - код купона (name_coupon); значение - словарь со значением скидки в процентах и
+    # значением действителен ли купон или нет
+    DATA_COUPON = {
+        "coupon": {
+            "value": 10,
+            "is_valid": True},
+        "coupon_old": {
+            "value": 20,
+            "is_valid": False},
+    }
+    if request.method == "GET":
+        if name_coupon in DATA_COUPON.keys():
+            data = DATA_COUPON.get(name_coupon)
+            discount = data["value"]
+            is_valid = data["is_valid"]
+            return JsonResponse({"discount": discount, "is_valid": is_valid}, json_dumps_params={'ensure_ascii': False})
+        else:
+            return HttpResponseNotFound("Неверный купон")
