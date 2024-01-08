@@ -146,7 +146,6 @@ def delivery_estimate_view(request):
         data = request.GET
         country = data.get('country')
         city = data.get('city')
-         # TODO Реализуйте логику расчёта стоимости доставки, которая выполняет следующее:
         if country in DATA_PRICE.keys():
             country_data = DATA_PRICE.get(country)
             if city in country_data.keys():
