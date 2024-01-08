@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import products_view, shop_view, products_page_view, cart_view, cart_add_view, cart_del_view, \
-    coupon_check_view
+    coupon_check_view, delivery_estimate_view
 
 
 app_name = "store"
@@ -13,6 +13,7 @@ urlpatterns = [
     path('cart/', cart_view, name="cart_view"),
     path('cart/add/<str:id_product>', cart_add_view),
     path('cart/del/<str:id_product>', cart_del_view),
-    path('coupon/check/<slug:coupon>', coupon_check_view)
+    path('coupon/check/<slug:coupon>', coupon_check_view),
+    path('delivery/estimate', delivery_estimate_view),
 
 ]
