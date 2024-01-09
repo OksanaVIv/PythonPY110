@@ -98,46 +98,47 @@
 						        <th>Общая цена, &#x20bd</th>
 						      </tr>
 						    </thead>
-						    <tbody>
-						      <tr class="text-center">
-						        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-						        
-						        <td class="image-prod"><div class="img" style="background-image:url({% static 'store/images/product-1.jpg' %});"></div></td>
-						        
-						        <td class="product-name">
-						        	<h3>Болгарский перец</h3>
-						        	<p>Сочный и яркий, он добавит красок и вкуса в ваши блюда.</p>
-						        </td>
-						        
-						        <td class="price">210.00</td>
-						        
-						        <td class="quantity">
-						        	<div class="input-group mb-3">
-					             	<input type="number" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-					          	</div>
-					          </td>
-						        
-						        <td class="total">210.00</td>
+							<tbody>
+							  <tr class="text-center">
+								<td class="product-remove"><a href="{% url 'store:remove_now' product.id%}"><span class="ion-ios-close"></span></a></td>
+
+								<td class="image-prod"><div class="img" style="background-image:url({% static 'store/images/product-1.jpg' %});"></div></td>
+
+								<td class="product-name">
+									<h3>Болгарский перец</h3>
+									<p>Сочный и яркий, он добавит красок и вкуса в ваши блюда.</p>
+								</td>
+
+								<td class="price">210.00</td>
+
+								<td class="quantity">
+									<div class="input-group mb-3">
+										<input type="number" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+									</div>
+								 </td>
+
+								<td class="total">210.00</td>
+
 						      </tr><!-- END TR-->
 
 						      <tr class="text-center">
-						        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-						        
+						        <td class="product-remove"><a href="{% url 'store:remove_now' product.id %}"><span class="ion-ios-close"></span></a></td>
+
 						        <td class="image-prod"><div class="img" style="background-image:url({% static 'store/images/product-2.jpg' %});"></div></td>
-						        
+
 						        <td class="product-name">
 						        	<h3>Клубника</h3>
 						        	<p>Сладкая и ароматная клубника, полная витаминов, чтобы сделать ваш день ярче.</p>
 						        </td>
-						        
+
 						        <td class="price">500.00</td>
-						        
+
 						        <td class="quantity">
 						        	<div class="input-group mb-3">
 					             	<input type="number" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
 					          	</div>
 					          </td>
-						        
+
 						        <td class="total">500.00</td>
 						      </tr><!-- END TR-->
 						    </tbody>
