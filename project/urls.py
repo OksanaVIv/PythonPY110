@@ -35,5 +35,6 @@ urlpatterns = [
     # path('weather/', weather_view),
     path('', include('app_weather.urls')),
     path('', include('store.urls')),
+    path('login/', include('app_login.urls')),
 
 ]
