@@ -76,7 +76,7 @@
                     <li class="nav-item"><a href="{% url 'app_login:logout_view' %}" class="nav-link">Выйти из аккаунта</a>
                     <li class="nav-item"><a class="nav-link">Привет {{user.username}}!</a>
                     {% else %}
-                    <li class="nav-item"><a href="{% url 'app_login:login_view' %}" class="nav-link">Войти в аккаунт</a>
+                  <li class="nav-item"><a href="{% url 'app_login:login_view' %}" class="nav-link">Войти в аккаунт</a>
                     {% endif %}
                 </ul>
               </div>

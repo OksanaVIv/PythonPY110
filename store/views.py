@@ -4,7 +4,7 @@ from .models import DATABASE
 from logic.services import filtering_category
 from logic.services import view_in_cart, add_to_cart, remove_from_cart
 from django.shortcuts import render, redirect
-
+from django.contrib.auth import get_user
 
 
 # def shop_view(request):
@@ -18,9 +18,6 @@ def shop_view(request):
         return render(request,
                       'store/shop.html',
                       context={"products": DATABASE.values()})
-
-
-
 
 
 def products_page_view(request, page):
@@ -72,7 +69,9 @@ def products_view(request):
 
 def cart_view(request):
     if request.method == "GET":
-        data = view_in_cart()
+        # data = view_in_cart()
+        current_user = get_user(request).username
+        data = view_in_cart(request)[current_user]
         if request.GET.get('format') == 'JSON':
             return JsonResponse(data, json_dumps_params={'ensure_ascii': False,
                                                      'indent': 4})
@@ -81,8 +80,7 @@ def cart_view(request):
             product = DATABASE[str(product_id)]  # 1. Получите информацию о продукте из DATABASE по его product_id. product будет словарём
             product["quantity"] = quantity
             # 2. в словарь product под ключом "quantity" запишите текущее значение товара в корзине
-            product[
-                "price_total"] = f"{quantity * product['price_after']:.2f}"  # добавление общей цены позиции с ограничением в 2 знака
+            product["price_total"] = f"{quantity * product['price_after']:.2f}"  # добавление общей цены позиции с ограничением в 2 знака
             # 3. добавьте product в список products
             products.append(product)
         return render(request, "store/cart.html", context={"products": products})
@@ -90,7 +88,7 @@ def cart_view(request):
 
 def cart_add_view(request, id_product):
     if request.method == "GET":
-        result = add_to_cart(id_product)  # TODO Вызвать ответственную за это действие функцию
+        result = add_to_cart(request, id_product)  # TODO Вызвать ответственную за это действие функцию
         if result:
             return JsonResponse({"answer": "Продукт успешно добавлен в корзину"},
                                 json_dumps_params={'ensure_ascii': False})
@@ -102,7 +100,7 @@ def cart_add_view(request, id_product):
 
 def cart_del_view(request, id_product):
     if request.method == "GET":
-        result = remove_from_cart(id_product)  # TODO Вызвать ответственную за это действие функцию
+        result = remove_from_cart(request, id_product)  # TODO Вызвать ответственную за это действие функцию
         if result:
             return JsonResponse({"answer": "Продукт успешно удалён из корзины"},
                                 json_dumps_params={'ensure_ascii': False})
@@ -158,7 +156,7 @@ def delivery_estimate_view(request):
 
 def cart_buy_now_view(request, id_product):
     if request.method == "GET":
-        result = add_to_cart(id_product)
+        result = add_to_cart(request, id_product)
         if result:
             return redirect("store:cart_view")
 
@@ -176,7 +174,7 @@ def cart_buy_now_view(request, id_product):
 
 def cart_remove_view(request, id_product):
     if request.method == "GET":
-        result = remove_from_cart(id_product)  # TODO Вызвать функцию удаления из корзины
+        result = remove_from_cart(request, id_product)  # TODO Вызвать функцию удаления из корзины
         if result:
             return redirect("store:cart_view")  # TODO Вернуть перенаправление на корзину
 
