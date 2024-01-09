@@ -61,7 +61,7 @@
 	    							<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center" data-product-id="{{product.id}}">
 	    								<span><i class="ion-ios-add-circle-outline" data-product-id="{{product.id}}"></i></span>
 	    							</a>
-	    							<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+	    							<a href="{% url 'store:buy_now' product.id %}" class="buy-now d-flex justify-content-center align-items-center mx-1">
 	    								<span><i class="ion-ios-cart"></i></span>
 	    							</a>
 	    							<a href="#" class="heart d-flex justify-content-center align-items-center ">

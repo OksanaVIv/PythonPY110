@@ -3,7 +3,8 @@ from django.http import HttpResponse, JsonResponse, HttpResponseNotFound
 from .models import DATABASE
 from logic.services import filtering_category
 from logic.services import view_in_cart, add_to_cart, remove_from_cart
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+
 
 
 # def shop_view(request):
@@ -125,9 +126,7 @@ def coupon_check_view(request, name_coupon):
     if request.method == "GET":
         if name_coupon in DATA_COUPON.keys():
             data = DATA_COUPON.get(name_coupon)
-            discount = data["value"]
-            is_valid = data["is_valid"]
-            return JsonResponse({"discount": discount, "is_valid": is_valid}, json_dumps_params={'ensure_ascii': False})
+            return JsonResponse({"discount": data["value"], "is_valid": data["is_valid"]}, json_dumps_params={'ensure_ascii': False})
         else:
             return HttpResponseNotFound("Неверный купон")
 
@@ -155,6 +154,30 @@ def delivery_estimate_view(request):
                 return JsonResponse({'price': country_data["fix_price"]}, json_dumps_params={'ensure_ascii': False})
         else:
             return HttpResponseNotFound("Неверные данные")
-        # Если в базе DATA_PRICE есть и страна (country) и существует город(city), то вернуть JsonResponse со словарём, {"price": значение стоимости доставки}
-        # Если в базе DATA_PRICE есть страна, но нет города, то вернуть JsonResponse со словарём, {"price": значение фиксированной стоимости доставки}
-        # Если нет страны, то вернуть HttpResponseNotFound("Неверные данные")
+
+
+def cart_buy_now_view(request, id_product):
+    if request.method == "GET":
+        result = add_to_cart(id_product)
+        if result:
+            return redirect("store:cart_view")
+
+        return HttpResponseNotFound("Неудачное добавление в корзину")
+
+
+# def cart_buy_now_view(request, id_product):
+#     if request.method == "GET":
+#         result = add_to_cart(id_product)
+#         if result:
+#             return cart_view(request)
+#
+#         return HttpResponseNotFound("Неудачное добавление в корзину")
+
+
+def cart_remove_view(request, id_product):
+    if request.method == "GET":
+        result = remove_from_cart(id_product)  # TODO Вызвать функцию удаления из корзины
+        if result:
+            return redirect("store:cart_view")  # TODO Вернуть перенаправление на корзину
+
+        return HttpResponseNotFound("Неудачное удаление из корзины")
