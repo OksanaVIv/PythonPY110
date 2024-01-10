@@ -5,5 +5,5 @@ app_name = 'app_login'
 
 urlpatterns = [
     path('', login_view, name="login_view"),
-    path('', logout_view, name="logout_view")
+    path('l/', logout_view, name="logout_view")
 ]
