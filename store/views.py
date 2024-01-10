@@ -67,7 +67,7 @@ def products_view(request):
 #                                                      'indent': 4})
 
 
-@login_required(login_url='login:login_view')
+@login_required(login_url='app_login:login_view')
 def cart_view(request):
     if request.method == "GET":
         # data = view_in_cart()
@@ -87,7 +87,7 @@ def cart_view(request):
         return render(request, "store/cart.html", context={"products": products})
 
 
-@login_required(login_url='login:login_view')
+@login_required(login_url='app_login:login_view')
 def cart_add_view(request, id_product):
     if request.method == "GET":
         result = add_to_cart(request, id_product)  # TODO Вызвать ответственную за это действие функцию
@@ -156,7 +156,7 @@ def delivery_estimate_view(request):
             return HttpResponseNotFound("Неверные данные")
 
 
-@login_required(login_url='login:login_view')
+@login_required(login_url='app_login:login_view')
 def cart_buy_now_view(request, id_product):
     if request.method == "GET":
         result = add_to_cart(request, id_product)
