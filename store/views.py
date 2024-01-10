@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 #             data = f.read()
 #         return HttpResponse(data)
 
+
 def shop_view(request):
     if request.method == "GET":
         return render(request,

@@ -141,6 +141,78 @@ def add_user_to_cart(request, username: str) -> None:
             json.dump(cart_users, f)
 
 
+def view_in_wishlist(request) -> dict:
+    """
+    Просматривает содержимое cart.json
+
+    :return: Содержимое 'cart.json'
+    """
+    if os.path.exists('wishlist.json'):  # Если файл существует
+        with open('wishlist.json', encoding='utf-8') as f:
+            return json.load(f)
+
+    user = get_user(request).username  # Получаем авторизированного пользователя
+    wishlist = {user: {'products': []}}  # стало
+    # cart = {'products': {}}  # Создаём пустую корзину - было
+    with open('wishlist.json', mode='x', encoding='utf-8') as f:   # Создаём файл и записываем туда пустую корзину
+        json.dump(wishlist, f)
+
+    return wishlist
+
+
+def remove_from_wishlist(request, id_product: str) -> bool:
+    """
+    Добавляет позицию продукта из корзины. Если в корзине есть такой продукт, то удаляется ключ в словаре
+    с этим продуктом.
+
+    :param id_product: Идентификационный номер продукта в виде строки.
+    :return: Возвращает True в случае успешного удаления, а False в случае неуспешного удаления(товара по id_product
+    не существует).
+    """
+    # cart = view_in_cart()  # TODO Помните, что у вас есть уже реализация просмотра корзины,
+    # # поэтому, чтобы загрузить данные из корзины, не нужно заново писать код.
+    wishlist_users = view_in_wishlist(request)
+    wishlist = wishlist_users[get_user(request).username]  # стал
+
+    if id_product in wishlist['products']:
+        wishlist.remove(id_product)
+        with open('cart.json', mode='w', encoding='utf-8') as f:  # Создаём файл и записываем туда пустую корзину
+            # json.dump(cart, f)
+            json.dump(wishlist_users, f)
+    else:
+        return False
+    return True
+
+
+def add_to_wishlist(request, id_product: str) -> bool:
+
+    wishlist_users = view_in_wishlist(request)
+    wishlist = wishlist_users[get_user(request).username]  # стало
+
+    if id_product not in wishlist['products']:
+        wishlist['products'].append(id_product)
+        with open('wishlist.json', mode='w', encoding='utf-8') as f:
+        # json.dump(cart, f)
+            json.dump(wishlist_users, f)
+    return True
+
+
+def add_user_to_wishlist(request, username: str) -> None:
+    """
+    Добавляет пользователя в базу данных корзины, если его там не было.
+
+    :param username: Имя пользователя
+    :return: None
+    """
+    wishlist_users = view_in_cart(request)  # Чтение всей базы корзин
+
+    wishlist = wishlist_users.get(username)  # Получение корзины конкретного пользователя
+
+    if not wishlist:  # Если пользователя до настоящего момента не было в корзине, то создаём его и записываем в базу
+        with open('cart.json', mode='w', encoding='utf-8') as f:
+            wishlist_users[username] = {'products': []}
+            json.dump(wishlist_users, f)
+
 
 if __name__ == "__main__":
     # Проверка работоспособности функций view_in_cart, add_to_cart, remove_from_cart
